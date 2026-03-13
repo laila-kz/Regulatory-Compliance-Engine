@@ -56,4 +56,5 @@ In **2026**, the **EU AI Act** enforces strict transparency requirements (**Arti
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/laila-kz/RegTech-AI-Compliance-Auditor
+git clone https://github.com/laila-kz/Regulatory-Compliance-Engine
+
