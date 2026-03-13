@@ -1,0 +1,213 @@
+model_id,license,datasets,language,has_limitations_section,has_bias_discussion,has_risks_discussion,data_transparency_score,raw_text
+Mistral-7B,unknown,,,0,0,0,0,"mistralai/Mistral-7B-v0.1 · Hugging Face Hugging Face Models Datasets Spaces Buckets new Docs Enterprise Pricing Log In Sign Up mistralai / Mistral-7B-v0.1 like 4.05k Follow Mistral AI_ 15.7k Text Generation Transformers PyTorch Safetensors English mistral pretrained mistral-common text-generation-inference arxiv: 2310.06825 License: apache-2.0 Model card Files Files and versions xet Community 234 Deploy Use this model Model Card for Mistral-7B-v0.1 Model Architecture Troubleshooting Notice The Mistral AI Team Model Card for Mistral-7B-v0.1 The Mistral-7B-v0.1 Large Language Model (LLM) is a pretrained generative text model with 7 billion parameters. 
+Mistral-7B-v0.1 outperforms Llama 2 13B on all benchmarks we tested. For full details of this model please read our paper and release blog post . Model Architecture Mistral-7B-v0.1 is a transformer model, with the following architecture choices: Grouped-Query Attention Sliding-Window Attention Byte-fallback BPE tokenizer Troubleshooting If you see the following error: KeyError: 'mistral' Or: NotImplementedError: Cannot copy out of meta tensor; no data! Ensure you are utilizing a stable version of Transformers, 4.34.0 or newer. Notice Mistral 7B is a pretrained base model and therefore does not have any moderation mechanisms. The Mistral AI Team Albert Jiang, Alexandre Sablayrolles, Arthur Mensch, Chris Bamford, Devendra Singh Chaplot, Diego de las Casas, Florian Bressand, Gianna Lengyel, Guillaume Lample, Lélio Renard Lavaud, Lucile Saulnier, Marie-Anne Lachaux, Pierre Stock, Teven Le Scao, Thibaut Lavril, Thomas Wang, Timothée Lacroix, William El Sayed. Downloads last month 522,183 Inference Providers NEW Text Generation This model isn't deployed by any Inference Provider. 🙋 31 Ask for provider support Model tree for mistralai/Mistral-7B-v0.1 Adapters 2375 models Finetunes 1000 models Merges 393 models Quantizations 194 models Spaces using mistralai/Mistral-7B-v0.1 100 🏃 overhead520/LLM-Settings-Guide 🚀 Vokturz/can-it-run-llm 🏆 eduagarcia/open_pt_llm_leaderboard 🐠 3DTopia/3DGen-Arena 😻 ehristoforu/mistral-7b-chat 🏆🇵🇱 speakleash/open_pl_llm_leaderboard 🥇 logikon/open_cot_leaderboard 💬 allenai/BaseChat 🧠 MCP-1st-Birthday/TraceMind 👀 GenAICoder/MultiPDFChatbot 💻 FallnAI/Quantize-HF-Models 😻 prometheus-eval/BiGGen-Bench-Leaderboard + 95 Spaces + 88 Spaces Paper for mistralai/Mistral-7B-v0.1 Mistral 7B Paper • 2310.06825 • Published Oct 10, 2023 • 58 System theme Company TOS Privacy About Careers Website Models Datasets Spaces Pricing Docs"
+Mixtral,unknown,,,0,0,0,0,"mistralai/Mixtral-8x7B-v0.1 · Hugging Face Hugging Face Models Datasets Spaces Buckets new Docs Enterprise Pricing Log In Sign Up mistralai / Mixtral-8x7B-v0.1 like 1.8k Follow Mistral AI_ 15.7k Safetensors 5 languages vllm mixtral Mixture of Experts mistral-common License: apache-2.0 Model card Files Files and versions xet Community 70 Model Card for Mixtral-8x7B Warning Run the model In half-precision Lower precision using (8-bit & 4-bit) using bitsandbytes Load the model with Flash Attention 2 Notice The Mistral AI Team Model Card for Mixtral-8x7B The Mixtral-8x7B Large Language Model (LLM) is a pretrained generative Sparse Mixture of Experts. The Mistral-8x7B outperforms Llama 2 70B on most benchmarks we tested. For full details of this model please read our release blog post . Warning This repo contains weights that are compatible with vLLM serving of the model as well as Hugging Face transformers library. It is based on the original Mixtral torrent release , but the file format and parameter names are different. Please note that model cannot (yet) be instantiated with HF. Run the model from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model_id = ""mistralai/Mixtral-8x7B-v0.1"" tokenizer = AutoTokenizer.from_pretrained(model_id)
+
+model = AutoModelForCausalLM.from_pretrained(model_id)
+
+text = ""Hello my name is"" inputs = tokenizer(text, return_tensors= ""pt"" )
+
+outputs = model.generate(**inputs, max_new_tokens= 20 ) print (tokenizer.decode(outputs[ 0 ], skip_special_tokens= True )) By default, transformers will load the model in full precision. Therefore you might be interested to further reduce down the memory requirements to run the model through the optimizations we offer in HF ecosystem: In half-precision Note float16 precision only works on GPU devices Click to expand + import torch from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model_id = ""mistralai/Mixtral-8x7B-v0.1""
+tokenizer = AutoTokenizer.from_pretrained(model_id) + model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.float16).to(0) text = ""Hello my name is"" + inputs = tokenizer(text, return_tensors=""pt"").to(0) outputs = model.generate(**inputs, max_new_tokens=20)
+print(tokenizer.decode(outputs[0], skip_special_tokens=True)) Lower precision using (8-bit & 4-bit) using bitsandbytes Click to expand + import torch from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model_id = ""mistralai/Mixtral-8x7B-v0.1""
+tokenizer = AutoTokenizer.from_pretrained(model_id) + model = AutoModelForCausalLM.from_pretrained(model_id, load_in_4bit=True) text = ""Hello my name is"" + inputs = tokenizer(text, return_tensors=""pt"").to(0) outputs = model.generate(**inputs, max_new_tokens=20)
+print(tokenizer.decode(outputs[0], skip_special_tokens=True)) Load the model with Flash Attention 2 Click to expand + import torch from transformers import AutoModelForCausalLM, AutoTokenizer
+
+model_id = ""mistralai/Mixtral-8x7B-v0.1""
+tokenizer = AutoTokenizer.from_pretrained(model_id) + model = AutoModelForCausalLM.from_pretrained(model_id, use_flash_attention_2=True) text = ""Hello my name is"" + inputs = tokenizer(text, return_tensors=""pt"").to(0) outputs = model.generate(**inputs, max_new_tokens=20)
+print(tokenizer.decode(outputs[0], skip_special_tokens=True)) Notice Mixtral-8x7B is a pretrained base model and therefore does not have any moderation mechanisms. The Mistral AI Team Albert Jiang, Alexandre Sablayrolles, Arthur Mensch, Blanche Savary, Chris Bamford, Devendra Singh Chaplot, Diego de las Casas, Emma Bou Hanna, Florian Bressand, Gianna Lengyel, Guillaume Bour, Guillaume Lample, Lélio Renard Lavaud, Louis Ternon, Lucile Saulnier, Marie-Anne Lachaux, Pierre Stock, Teven Le Scao, Théophile Gervet, Thibaut Lavril, Thomas Wang, Timothée Lacroix, William El Sayed. Downloads last month 156,881 Safetensors Model size 47B params Tensor type BF16 · Files info Inference Providers NEW This model isn't deployed by any Inference Provider. 🙋 8 Ask for provider support Model tree for mistralai/Mixtral-8x7B-v0.1 Adapters 91 models Finetunes 66 models Merges 37 models Quantizations 39 models Spaces using mistralai/Mixtral-8x7B-v0.1 100 🦊 ehristoforu/mixtral-46.7b-chat 🏆 eduagarcia/open_pt_llm_leaderboard 🐙 Tomoniai/Mixtral-Chat 🥇 logikon/open_cot_leaderboard 🔥 auto-cap/MoE-CAP-Dashboard 💊🐰⚕️ AIM-Harvard/rabbits-leaderboard 🦊 broadfield/Mixtral-Agent 💻 FallnAI/Quantize-HF-Models 😻 prometheus-eval/BiGGen-Bench-Leaderboard 🚀 Justinrune/LLaMA-Factory 🏃 openfree/LLM_Quantization 🚀 Ateeqq/Mistral-8x7B + 95 Spaces + 88 Spaces System theme Company TOS Privacy About Careers Website Models Datasets Spaces Pricing Docs"
+Flan-T5,unknown,,,1,1,1,0,"google/flan-t5-base · Hugging Face Hugging Face Models Datasets Spaces Buckets new Docs Enterprise Pricing Log In Sign Up google / flan-t5-base like 1.06k Follow Google 46.7k Transformers PyTorch google-tensorflow TensorFlow JAX Safetensors 10 datasets 5 languages t5 text2text-generation text-generation-inference arxiv: 2210.11416 arxiv: 1910.09700 License: apache-2.0 Model card Files Files and versions xet Community 41 Deploy Use this model Model Card for FLAN-T5 base Table of Contents TL;DR Model Details Model Description Usage Using the Pytorch model Running the model on a CPU Running the model on a GPU Running the model on a GPU using different precisions Uses Direct Use and Downstream Use Out-of-Scope Use Bias, Risks, and Limitations Ethical considerations and risks Known Limitations Sensitive Use: Training Details Training Data Training Procedure Evaluation Testing Data, Factors & Metrics Results Environmental Impact Citation Model Recycling Model Card for FLAN-T5 base Table of Contents TL;DR Model Details Usage Uses Bias, Risks, and Limitations Training Details Evaluation Environmental Impact Citation Model Card Authors TL;DR If you already know T5, FLAN-T5 is just better at everything. For the same number of parameters, these models have been fine-tuned on more than 1000 additional tasks covering also more languages. 
+As mentioned in the first few lines of the abstract : Flan-PaLM 540B achieves state-of-the-art performance on several benchmarks, such as 75.2% on five-shot MMLU. We also publicly release Flan-T5 checkpoints,1 which achieve strong few-shot performance even compared to much larger models, such as PaLM 62B. Overall, instruction finetuning is a general method for improving the performance and usability of pretrained language models. Disclaimer : Content from this model card has been written by the Hugging Face team, and parts of it were copy pasted from the T5 model card . Model Details Model Description Model type: Language model Language(s) (NLP): English, Spanish, Japanese, Persian, Hindi, French, Chinese, Bengali, Gujarati, German, Telugu, Italian, Arabic, Polish, Tamil, Marathi, Malayalam, Oriya, Panjabi, Portuguese, Urdu, Galician, Hebrew, Korean, Catalan, Thai, Dutch, Indonesian, Vietnamese, Bulgarian, Filipino, Central Khmer, Lao, Turkish, Russian, Croatian, Swedish, Yoruba, Kurdish, Burmese, Malay, Czech, Finnish, Somali, Tagalog, Swahili, Sinhala, Kannada, Zhuang, Igbo, Xhosa, Romanian, Haitian, Estonian, Slovak, Lithuanian, Greek, Nepali, Assamese, Norwegian License: Apache 2.0 Related Models: All FLAN-T5 Checkpoints Original Checkpoints: All Original FLAN-T5 Checkpoints Resources for more information: Research paper GitHub Repo Hugging Face FLAN-T5 Docs (Similar to T5) Usage Find below some example scripts on how to use the model in transformers : Using the Pytorch model Running the model on a CPU Click to expand from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+tokenizer = T5Tokenizer.from_pretrained( ""google/flan-t5-base"" )
+model = T5ForConditionalGeneration.from_pretrained( ""google/flan-t5-base"" )
+
+input_text = ""translate English to German: How old are you?"" input_ids = tokenizer(input_text, return_tensors= ""pt"" ).input_ids
+
+outputs = model.generate(input_ids) print (tokenizer.decode(outputs[ 0 ])) Running the model on a GPU Click to expand # pip install accelerate from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+tokenizer = T5Tokenizer.from_pretrained( ""google/flan-t5-base"" )
+model = T5ForConditionalGeneration.from_pretrained( ""google/flan-t5-base"" , device_map= ""auto"" )
+
+input_text = ""translate English to German: How old are you?"" input_ids = tokenizer(input_text, return_tensors= ""pt"" ).input_ids.to( ""cuda"" )
+
+outputs = model.generate(input_ids) print (tokenizer.decode(outputs[ 0 ])) Running the model on a GPU using different precisions FP16 Click to expand # pip install accelerate import torch from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+tokenizer = T5Tokenizer.from_pretrained( ""google/flan-t5-base"" )
+model = T5ForConditionalGeneration.from_pretrained( ""google/flan-t5-base"" , device_map= ""auto"" , torch_dtype=torch.float16)
+
+input_text = ""translate English to German: How old are you?"" input_ids = tokenizer(input_text, return_tensors= ""pt"" ).input_ids.to( ""cuda"" )
+
+outputs = model.generate(input_ids) print (tokenizer.decode(outputs[ 0 ])) INT8 Click to expand # pip install bitsandbytes accelerate from transformers import T5Tokenizer, T5ForConditionalGeneration
+
+tokenizer = T5Tokenizer.from_pretrained( ""google/flan-t5-base"" )
+model = T5ForConditionalGeneration.from_pretrained( ""google/flan-t5-base"" , device_map= ""auto"" , load_in_8bit= True )
+
+input_text = ""translate English to German: How old are you?"" input_ids = tokenizer(input_text, return_tensors= ""pt"" ).input_ids.to( ""cuda"" )
+
+outputs = model.generate(input_ids) print (tokenizer.decode(outputs[ 0 ])) Uses Direct Use and Downstream Use The authors write in the original paper's model card that: The primary use is research on language models, including: research on zero-shot NLP tasks and in-context few-shot learning NLP tasks, such as reasoning, and question answering; advancing fairness and safety research, and understanding limitations of current large language models See the research paper for further details. Out-of-Scope Use More information needed. Bias, Risks, and Limitations The information below in this section are copied from the model's official model card : Language models, including Flan-T5, can potentially be used for language generation in a harmful way, according to Rae et al. (2021). Flan-T5 should not be used directly in any application, without a prior assessment of safety and fairness concerns specific to the application. Ethical considerations and risks Flan-T5 is fine-tuned on a large corpus of text data that was not filtered for explicit content or assessed for existing biases. As a result the model itself is potentially vulnerable to generating equivalently inappropriate content or replicating inherent biases in the underlying data. Known Limitations Flan-T5 has not been tested in real world applications. Sensitive Use: Flan-T5 should not be applied for any unacceptable use cases, e.g., generation of abusive speech. Training Details Training Data The model was trained on a mixture of tasks, that includes the tasks described in the table below (from the original paper, figure 2): Training Procedure According to the model card from the original paper : These models are based on pretrained T5 (Raffel et al., 2020) and fine-tuned with instructions for better zero-shot and few-shot performance. There is one fine-tuned Flan model per T5 model size. The model has been trained on TPU v3 or TPU v4 pods, using t5x codebase together with jax . Evaluation Testing Data, Factors & Metrics The authors evaluated the model on various tasks covering several languages (1836 in total). See the table below for some quantitative evaluation: For full details, please check the research paper . Results For full results for FLAN-T5-Base, see the research paper , Table 3. Environmental Impact Carbon emissions can be estimated using the Machine Learning Impact calculator presented in Lacoste et al. (2019) . Hardware Type: Google Cloud TPU Pods - TPU v3 or TPU v4  | Number of chips ≥ 4. Hours used: More information needed Cloud Provider: GCP Compute Region: More information needed Carbon Emitted: More information needed Citation BibTeX: @misc{https://doi.org/10.48550/arxiv.2210.11416,
+  doi = {10.48550/ARXIV.2210.11416},
+  
+  url = {https://arxiv.org/abs/2210.11416},
+  
+  author = {Chung, Hyung Won and Hou, Le and Longpre, Shayne and Zoph, Barret and Tay, Yi and Fedus, William and Li, Eric and Wang, Xuezhi and Dehghani, Mostafa and Brahma, Siddhartha and Webson, Albert and Gu, Shixiang Shane and Dai, Zhuyun and Suzgun, Mirac and Chen, Xinyun and Chowdhery, Aakanksha and Narang, Sharan and Mishra, Gaurav and Yu, Adams and Zhao, Vincent and Huang, Yanping and Dai, Andrew and Yu, Hongkun and Petrov, Slav and Chi, Ed H. and Dean, Jeff and Devlin, Jacob and Roberts, Adam and Zhou, Denny and Le, Quoc V. and Wei, Jason},
+  
+  keywords = {Machine Learning (cs.LG), Computation and Language (cs.CL), FOS: Computer and information sciences, FOS: Computer and information sciences},
+  
+  title = {Scaling Instruction-Finetuned Language Models},
+  
+  publisher = {arXiv},
+  
+  year = {2022},
+  
+  copyright = {Creative Commons Attribution 4.0 International}
+} Model Recycling Evaluation on 36 datasets using google/flan-t5-base as a base model yields average score of 77.98 in comparison to 68.82 by google/t5-v1_1-base. The model is ranked 1st among all tested models for the google/t5-v1_1-base architecture as of 06/02/2023
+Results: 20_newsgroup ag_news amazon_reviews_multi anli boolq cb cola copa dbpedia esnli financial_phrasebank imdb isear mnli mrpc multirc poem_sentiment qnli qqp rotten_tomatoes rte sst2 sst_5bins stsb trec_coarse trec_fine tweet_ev_emoji tweet_ev_emotion tweet_ev_hate tweet_ev_irony tweet_ev_offensive tweet_ev_sentiment wic wnli wsc yahoo_answers 86.2188 89.6667 67.12 51.9688 82.3242 78.5714 80.1534 75 77.6667 90.9507 85.4 93.324 72.425 87.2457 89.4608 62.3762 82.6923 92.7878 89.7724 89.0244 84.8375 94.3807 57.2851 89.4759 97.2 92.8 46.848 80.2252 54.9832 76.6582 84.3023 70.6366 70.0627 56.338 53.8462 73.4 For more information, see: Model Recycling Downloads last month 1,097,894 Inference Providers NEW This model isn't deployed by any Inference Provider. 🙋 1 Ask for provider support Model tree for google/flan-t5-base Adapters 300 models Finetunes 895 models Merges 2 models Quantizations 15 models Datasets used to train google/flan-t5-base openai/gsm8k Benchmark • Updated Dec 20, 2025 • 17.6k • 588k • 1.2k deepmind/code_contests Viewer • Updated Jun 11, 2023 • 4.04k • 274k • 220 cimec/lambada Viewer • Updated Jan 4, 2024 • 12.7k • 21.2k • 64 Spaces using google/flan-t5-base 100 🎼 Surn/UnlimitedMusicGen 🎵 patgpt4/MusicGen 🎵 sunnyujjawal/AI-Music-Generator 👀 Napawit/AudioX 👁 TiberiuCristianLeon/TranslateGradio 🎓 mkshari/srcdaksh 🔊 FunAudioLLM/ThinkSound 👀 Zeyue7/AudioX 🎵 facebook/MelodyFlow 😻 Sharathhebbar24/One-stop-for-Open-source-models 🥇 mteb/leaderboard_legacy 📉 amaai-lab/text2midi + 95 Spaces + 88 Spaces Collection including google/flan-t5-base Flan-T5 release Collection The Flan-T5 covers 4 checkpoints of different sizes each time.  It also includes upgrades versions trained using Universal sampling • 7 items • Updated 1 day ago • 33 Papers for google/flan-t5-base Scaling Instruction-Finetuned Language Models Paper • 2210.11416 • Published Oct 20, 2022 • 8 Quantifying the Carbon Emissions of Machine Learning Paper • 1910.09700 • Published Oct 21, 2019 • 37 System theme Company TOS Privacy About Careers Website Models Datasets Spaces Pricing Docs"
+Command-R,unknown,,,0,0,0,0,"CohereLabs/c4ai-command-r-v01 · Hugging Face Hugging Face Models Datasets Spaces Buckets new Docs Enterprise Pricing Log In Sign Up CohereLabs / c4ai-command-r-v01 like 1.1k Follow Cohere Labs 2.26k Text Generation Transformers Safetensors 10 languages doi:10.57967/hf/3139 cohere conversational text-generation-inference License: cc-by-nc-4.0 Model card Files Files and versions xet Community 62 Deploy Use this model You need to agree to share your contact information to access this model This repository is publicly accessible, but you have to accept the conditions to access its files and content . By submitting this form, you agree to the License Agreement and acknowledge that the information you provide will be collected, used, and shared in accordance with Cohere’s Privacy Policy . You’ll receive email updates about Cohere Labs and Cohere research, events, products and services. You can unsubscribe at any time. Log in or Sign Up to review the conditions and access this model content. Model Card for Cohere Labs Command-R Model Summary Model Details Grounded Generation and RAG Capabilities: Single-Step Tool Use Capabilities (""Function Calling""): Multi-Step Tool Use Capabilities (""Agents""): Code Capabilities: Model Card Contact Terms of Use: Try Chat: Model Card for Cohere Labs Command-R 🚨 This model is non-quantized version of Cohere Labs Command-R. You can find the quantized version of Cohere Labs Command-R using bitsandbytes here . Model Summary Cohere Labs Command-R is a research release of a 35 billion parameter highly performant generative model. Command-R is a large language model with open weights optimized for a variety of use cases including reasoning, summarization, and question answering. Command-R has the capability for multilingual generation evaluated in 10 languages and highly performant RAG capabilities. Developed by: Cohere and Cohere Labs Point of Contact: Cohere Labs License: CC-BY-NC , requires also adhering to Cohere Lab's Acceptable Use Policy Model: c4ai-command-r-v01 Model Size: 35 billion parameters Context length: 128K Try Cohere Labs Command R If you want to try Command R before downloading the weights, the model is hosted in a hugging face space here . Usage Please use transformers version 4.39.1 or higher # pip install 'transformers>=4.39.1' from transformers import AutoTokenizer, AutoModelForCausalLM
+
+model_id = ""CohereLabs/c4ai-command-r-v01"" tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id) # Format message with the command-r chat template messages = [{ ""role"" : ""user"" , ""content"" : ""Hello, how are you?"" }]
+input_ids = tokenizer.apply_chat_template(messages, tokenize= True , add_generation_prompt= True , return_tensors= ""pt"" ) ## <BOS_TOKEN><|START_OF_TURN_TOKEN|><|USER_TOKEN|>Hello, how are you?<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|> gen_tokens = model.generate(
+    input_ids, 
+    max_new_tokens= 100 , 
+    do_sample= True , 
+    temperature= 0.3 ,
+    )
+
+gen_text = tokenizer.decode(gen_tokens[ 0 ]) print (gen_text) Quantized model through bitsandbytes, 8-bit precision # pip install 'transformers>=4.39.1' bitsandbytes accelerate from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
+
+bnb_config = BitsAndBytesConfig(load_in_8bit= True )
+
+model_id = ""CohereLabs/c4ai-command-r-v01"" tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id, quantization_config=bnb_config) # Format message with the command-r chat template messages = [{ ""role"" : ""user"" , ""content"" : ""Hello, how are you?"" }]
+input_ids = tokenizer.apply_chat_template(messages, tokenize= True , add_generation_prompt= True , return_tensors= ""pt"" ) ## <BOS_TOKEN><|START_OF_TURN_TOKEN|><|USER_TOKEN|>Hello, how are you?<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|> gen_tokens = model.generate(
+    input_ids, 
+    max_new_tokens= 100 , 
+    do_sample= True , 
+    temperature= 0.3 ,
+    )
+
+gen_text = tokenizer.decode(gen_tokens[ 0 ]) print (gen_text) Quantized model through bitsandbytes, 4-bit precision You can find a quantized version of this model to 4-bit precision here . Model Details Input : Models input text only. Output : Models generate text only. Model Architecture : This is an auto-regressive language model that uses an optimized transformer architecture. After pretraining, this model uses supervised fine-tuning (SFT) and preference training to align model behavior to human preferences for helpfulness and safety. Languages covered : The model is optimized to perform well in the following languages: English, French, Spanish, Italian, German, Brazilian Portuguese, Japanese, Korean, Simplified Chinese, and Arabic. Pre-training data additionally included the following 13 languages: Russian, Polish, Turkish, Vietnamese, Dutch, Czech, Indonesian, Ukrainian, Romanian, Greek, Hindi, Hebrew, Persian. Context length : Command-R supports a context length of 128K. Grounded Generation and RAG Capabilities: Command-R has been specifically trained with grounded generation capabilities. This means that it can generate responses based on a list of supplied document snippets, and it will include grounding spans (citations) in its response indicating the source of the information.
+This can be used to enable behaviors such as grounded summarization and the final step of Retrieval Augmented Generation (RAG).This behavior has been trained into the model via a mixture of supervised fine-tuning and preference fine-tuning, using a specific prompt template.
+Deviating from this prompt template may reduce performance, but we encourage experimentation. Command-R’s grounded generation behavior takes a conversation as input (with an optional user-supplied system preamble, indicating task, context and desired output style), along with a list of retrieved document snippets.
+The document snippets should be chunks, rather than long documents, typically around  100-400 words per chunk. Document snippets consist of key-value pairs. The keys should be short descriptive strings, the values can be text or semi-structured. By default, Command-R will generate grounded responses by first predicting which documents are relevant, then predicting which ones it will cite, then generating an answer. 
+Finally, it will then insert grounding spans into the answer. See below for an example. This is referred to as accurate grounded generation. The model is trained with a number of other answering modes, which can be selected by prompt changes . A fast citation mode is supported in the tokenizer, which will directly generate an answer with grounding spans in it, without first writing the answer out in full. This sacrifices some grounding accuracy in favor of generating fewer tokens. Comprehensive documentation for working with command-R's grounded generation prompt template can be found here . The code snippet below shows a minimal working example on how to render a prompt. Usage: Rendering Grounded Generation prompts [CLICK TO EXPAND] from transformers import AutoTokenizer
+
+model_id = ""CohereLabs/c4ai-command-r-v01"" tokenizer = AutoTokenizer.from_pretrained(model_id) # define conversation input: conversation = [
+    { ""role"" : ""user"" , ""content"" : ""Whats the biggest penguin in the world?"" }
+] # define documents to ground on: documents = [
+    { ""title"" : ""Tall penguins"" , ""text"" : ""Emperor penguins are the tallest growing up to 122 cm in height."" }, 
+    { ""title"" : ""Penguin habitats"" , ""text"" : ""Emperor penguins only live in Antarctica."" }
+] # render the tool use prompt as a string: grounded_generation_prompt = tokenizer.apply_grounded_generation_template(
+    conversation,
+    documents=documents,
+    citation_mode= ""accurate"" , # or ""fast"" tokenize= False ,
+    add_generation_prompt= True ,
+) print (grounded_generation_prompt) Example Rendered Grounded Generation Prompt [CLICK TO EXPAND] The instructions in this section override those in the task description and style guide sections. Don't answer questions that are harmful or immoral.
+
+# System Preamble
+## Basic Rules
+You are a powerful conversational AI trained by Cohere to help people. You are augmented by a number of tools, and your job is to use and consume the output of these tools to best help the user. You will see a conversation history between yourself and a user, ending with an utterance from the user. You will then see a specific instruction instructing you what kind of response to generate. When you answer the user's requests, you cite your sources in your answers, according to those instructions.
+
+# User Preamble
+## Task and Context
+You help people answer their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You should focus on serving the user's needs as best you can, which will be wide-ranging.
+
+## Style Guide
+Unless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|USER_TOKEN|>Whats the biggest penguin in the world?<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|SYSTEM_TOKEN|><results>
+Document: 0
+title: Tall penguins
+text: Emperor penguins are the tallest growing up to 122 cm in height.
+
+Document: 1
+title: Penguin habitats
+text: Emperor penguins only live in Antarctica.
+</results><|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|SYSTEM_TOKEN|>Carefully perform the following instructions, in order, starting each with a new line.
+Firstly, Decide which of the retrieved documents are relevant to the user's last input by writing 'Relevant Documents:' followed by comma-separated list of document numbers. If none are relevant, you should instead write 'None'.
+Secondly, Decide which of the retrieved documents contain facts that should be cited in a good answer to the user's last input by writing 'Cited Documents:' followed a comma-separated list of document numbers. If you dont want to cite any of them, you should instead write 'None'.
+Thirdly, Write 'Answer:' followed by a response to the user's last input in high quality natural english. Use the retrieved documents to help you. Do not insert any citations or grounding markup.
+Finally, Write 'Grounded answer:' followed by a response to the user's last input in high quality natural english. Use the symbols <co: doc> and </co: doc> to indicate when a fact comes from a document in the search result, e.g <co: 0>my fact</co: 0> for a fact from document 0.<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|> Example Rendered Grounded Generation Completion [CLICK TO EXPAND] Relevant Documents: 0,1
+Cited Documents: 0,1
+Answer: The Emperor Penguin is the tallest or biggest penguin in the world. It is a bird that lives only in Antarctica and grows to a height of around 122 centimetres.
+Grounded answer: The <co: 0>Emperor Penguin</co: 0> is the <co: 0>tallest</co: 0> or biggest penguin in the world. It is a bird that <co: 1>lives only in Antarctica</co: 1> and <co: 0>grows to a height of around 122 centimetres.</co: 0> Single-Step Tool Use Capabilities (""Function Calling""): Single-step tool use (or “Function Calling”) allows Command R to interact with external tools like APIs, databases, or search engines. Single-step tool use is made of two model inferences: Tool Selection: The model decides which tools to call and with what parameters. It’s then up to the developer to execute these tool calls and obtain tool results. Response Generation: The model generates the final response given the tool results.
+You can learn more about single step tool use in our documentation . Command R has been specifically trained with single-step tool use (or “Function Calling”) capabilities. These have been trained into the model via a mixture of supervised fine-tuning and preference fine-tuning, using a specific prompt template. Deviating from this prompt template may reduce performance. This is why we recommend using the prompt template described below. Command R’s single-step tool use functionality takes a conversation as input (with an optional user-system preamble), along with a list of available tools. The model will then generate a json-formatted list of actions to execute on a subset of those tools. Command R may use one of its supplied tools more than once. The model has been trained to recognise a special directly_answer tool, which it uses to indicate that it doesn’t want to use any of its other tools. The ability to abstain from calling a specific tool can be useful in a range of situations, such as greeting a user, or asking clarifying questions. We recommend including the directly_answer tool, but it can be removed or renamed if required. Comprehensive documentation for working with Command R's single-step tool use prompt template can be found here and here . You can render the single-step tool use prompt template by using the function apply_tool_use_template() . The code snippet below shows a minimal working example on how to render this prompt. Command R also supports Hugging Face's tool use API to render the same prompt. Usage: Rendering Single-Step Tool Use Prompts [CLICK TO EXPAND] from transformers import AutoTokenizer
+
+model_id = ""CohereLabs/c4ai-command-r-v01"" tokenizer = AutoTokenizer.from_pretrained(model_id) # define conversation input: conversation = [
+    { ""role"" : ""user"" , ""content"" : ""Whats the biggest penguin in the world?"" }
+] # Define tools available for the model to use: tools = [
+  { ""name"" : ""internet_search"" , ""description"" : ""Returns a list of relevant document snippets for a textual query retrieved from the internet"" , ""parameter_definitions"" : { ""query"" : { ""description"" : ""Query to search the internet with"" , ""type"" : 'str' , ""required"" : True }
+    }
+  },
+  { 'name' : ""directly_answer"" , ""description"" : ""Calls a standard (un-augmented) AI chatbot to generate a response given the conversation history"" , 'parameter_definitions' : {}
+  }
+] # render the tool use prompt as a string: tool_use_prompt = tokenizer.apply_tool_use_template(
+    conversation,
+    tools=tools,
+    tokenize= False ,
+    add_generation_prompt= True ,
+) print (tool_use_prompt) Usage: Rendering prompts with the Single-Step Tool Use API [CLICK TO EXPAND] from transformers import AutoTokenizer
+
+model_id = ""CohereLabs/c4ai-command-r-v01"" tokenizer = AutoTokenizer.from_pretrained(model_id) # define conversation input: conversation = [
+    { ""role"" : ""user"" , ""content"" : ""Whats the biggest penguin in the world?"" }
+] # Define tools available for the model to use # Type hints and docstrings from Python functions are automatically extracted def internet_search ( query: str ): """""" Returns a list of relevant document snippets for a textual query retrieved from the internet Args: query: Query to search the internet with """""" pass def directly_answer (): """""" Calls a standard (un-augmented) AI chatbot to generate a response given the conversation history """""" pass tools = [internet_search, directly_answer] # render the tool use prompt as a string: tool_use_prompt = tokenizer.apply_chat_template(
+    conversation,
+    tools=tools,
+    tokenize= False ,
+    add_generation_prompt= True ,
+) print (tool_use_prompt) Example Rendered Single-Step Tool Use Prompt [CLICK TO EXPAND] <BOS_TOKEN><|START_OF_TURN_TOKEN|><|SYSTEM_TOKEN|># Safety Preamble
+The instructions in this section override those in the task description and style guide sections. Don't answer questions that are harmful or immoral.
+
+# System Preamble
+## Basic Rules
+You are a powerful conversational AI trained by Cohere to help people. You are augmented by a number of tools, and your job is to use and consume the output of these tools to best help the user. You will see a conversation history between yourself and a user, ending with an utterance from the user. You will then see a specific instruction instructing you what kind of response to generate. When you answer the user's requests, you cite your sources in your answers, according to those instructions.
+
+# User Preamble
+## Task and Context
+You help people answer their questions and other requests interactively. You will be asked a very wide array of requests on all kinds of topics. You will be equipped with a wide range of search engines or similar tools to help you, which you use to research your answer. You should focus on serving the user's needs as best you can, which will be wide-ranging.
+
+## Style Guide
+Unless the user asks for a different style of answer, you should answer in full sentences, using proper grammar and spelling.
+
+## Available Tools
+Here is a list of tools that you have available to you:
+
+```python
+def internet_search(query: str) -> List[Dict]:
+    """"""Returns a list of relevant document snippets for a textual query retrieved from the internet
+
+    Args:
+        query (str): Query to search the internet with
+    """"""
+    pass
+```
+
+```python
+def directly_answer() -> List[Dict]:
+    """"""Calls a standard (un-augmented) AI chatbot to generate a response given the conversation history
+    """"""
+    pass
+```<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|USER_TOKEN|>Whats the biggest penguin in the world?<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|SYSTEM_TOKEN|>Write 'Action:' followed by a json-formatted list of actions that you want to perform in order to produce a good response to the user's last input. You can use any of the supplied tools any number of times, but you should aim to execute the minimum number of necessary actions for the input. You should use the `directly-answer` tool if calling the other tools is unnecessary. The list of actions you want to call should be formatted as a list of json objects, for example:
+```json
+[
+    {
+        ""tool_name"": title of the tool in the specification,
+        ""parameters"": a dict of parameters to input into the tool as they are defined in the specs, or {} if it takes no parameters
+    }
+]```<|END_OF_TURN_TOKEN|><|START_OF_TURN_TOKEN|><|CHATBOT_TOKEN|> Example Rendered Single-Step Tool Use Completion [CLICK TO EXPAND] Action: ```json
+[
+      {
+          ""tool_name"": ""internet_search"",
+          ""parameters"": {
+              ""query"": ""biggest penguin in the world""
+          }
+      }
+]
+``` Multi-Step Tool Use Capabilities (""Agents""): Multi-step tool use is suited for building agents that can plan and execute a sequence of actions using multiple tools. Unlike single-step tool use, the model can perform several inference cycles, iterating through Action → Observation → Reflection until it decides on a final response. For more details, refer to our documentation on multi-step tool use . Command R has been specifically trained with multi-step tool use (or “Agents”) capabilities. These have been trained into the model via a mixture of supervised fine-tuning and preference fine-tuning, using a specific prompt template. Deviating from this prompt template may reduce performance. This is why we recommend using the prompt template described below. The prompt template is not yet available in the HuggingFace tokenizer. However, comprehensive documentation for working with Command R's multi-step tool use prompt template can be found here and here . Code Capabilities: Command-R has been optimized to interact with your code, by requesting code snippets, code explanations, or code rewrites. It might not perform well out-of-the-box for pure code completion. For better performance, we also recommend using a low temperature (and even greedy decoding) for code-generation related instructions. Model Card Contact For errors or additional questions about details in this model card, contact labs@cohere.com Terms of Use: We hope that the release of this model will make community-based research efforts more accessible, by releasing the weights of a highly performant 35 billion parameter m"
+Claude Sonnet,unknown,,,0,0,0,0,Not Found \ Anthropic
+ChatGPT (OpenAI),unknown,,,0,0,0,0,Enable JavaScript and cookies to continue

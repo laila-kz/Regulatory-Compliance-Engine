@@ -1,0 +1,8 @@
+streamlit
+pandas
+plotly
+huggingface_hub
+playwright
+pydantic
+requests
+beautifulsoup4
