@@ -41,11 +41,33 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # --- 2. Data Loading ---
+# @st.cache_data
+# def load_data():
+#     # Loading your provided CSV structure
+#     df = pd.read_csv("../data/audit_report.csv")
+#     return df
+
+import os
+import pandas as pd
+import streamlit as st
+
 @st.cache_data
 def load_data():
-    # Loading your provided CSV structure
-    df = pd.read_csv("../data/audit_report.csv")
-    return df
+    # 1. Get the path to the 'src' folder where this app.py lives
+    current_script_path = os.path.abspath(__file__)
+    src_folder = os.path.dirname(current_script_path)
+    
+    # 2. Go up one level to the Project Root, then into the 'data' folder
+    project_root = os.path.dirname(src_folder)
+    file_path = os.path.join(project_root, "data", "audit_report.csv")
+    
+    # 3. Check if the file actually exists before reading (prevents crash)
+    if not os.path.exists(file_path):
+        st.error(f"File not found at: {file_path}")
+        # Optional: return an empty dataframe so the rest of the app doesn't break
+        return pd.DataFrame()
+        
+    return pd.read_csv(file_path)
 
 df = load_data()
 
