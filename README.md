@@ -58,7 +58,7 @@ In **2026**, the **EU AI Act** enforces strict transparency requirements (**Arti
 ```bash
 git clone https://github.com/laila-kz/Regulatory-Compliance-Engine
 
-
+```
 
 # 🛡️ Guardia AI
 ### EU AI Act Regulatory Surveillance & Compliance Pipeline
