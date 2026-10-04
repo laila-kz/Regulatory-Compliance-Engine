@@ -10,6 +10,12 @@ In **2026**, the **EU AI Act** enforces strict transparency requirements (**Arti
 
 **Guardia AI** is an automated RegTech pipeline that monitors the **"Compliance Drift"** between a model’s technical reality and its corporate legal promises. It identifies gaps where technical documentation (Hugging Face Model Cards) fails to provide the structured risk and bias disclosures promised in legal terms of service.
 
+# 🛡️ Guardia AI
+### EU AI Act Regulatory Surveillance & Compliance Pipeline
+
+🔗 **[Live Dashboard](https://regulatory-compliance-engine-8hwtu8zvwzaohztzxgdz4u.streamlit.app/)**
+
+
 ![Main Dashboard](Results_pic/Dashboard1.png)
 ![Main Dashboard](Results_pic/Dashboard2.png)
 
@@ -60,7 +66,3 @@ git clone https://github.com/laila-kz/Regulatory-Compliance-Engine
 
 ```
 
-# 🛡️ Guardia AI
-### EU AI Act Regulatory Surveillance & Compliance Pipeline
-
-🔗 **[Live Dashboard](https://laila-kz-regulatory-compliance-engine-srcapp-usbfnx.streamlit.app/)**
